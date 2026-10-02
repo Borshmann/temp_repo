@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSH Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.0.0/css/xterm.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.0.0/lib/xterm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="main">
+        <div class="input">
+            <input type="text" id="host" name="host" value="0.0.0.0">
+
+            <input type="number" id="port" name="port" value="22">
+
+            <input type="text" id="username" name="username" value="username">
+
+            <input type="password" id="password" name="password" value="******">
+
+            <button id="connectButton">Connect</button>
+        </div>
+
+        <div class="before" id="terminal"></div>
+    </div>
+    <script src="{{ url_for('static', filename='js/terminal.js') }}"></script>
+</body>
+</html>

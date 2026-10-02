@@ -1,0 +1,40 @@
+<!-- templates/logs.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>I2C LOGS</title>
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 10px;
+        }
+        #log {
+            height: 95vh;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>LOADING...]</div>
+
+    <script>
+        const logDiv = document.getElementById('log');
+        const evtSource = new EventSource('/logs/stream');
+
+        evtSource.onmessage = function(event) {
+            logDiv.innerHTML += event.data + '\n';
+            logDiv.scrollTop = logDiv.scrollHeight;
+        };
+
+        evtSource.onerror = function() {
+            logDiv.innerHTML += '[ERROR LOGS]\n';
+            evtSource.close();
+        };
+    </script>
+</body>
+</html>

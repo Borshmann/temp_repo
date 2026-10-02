@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+
+    {% include 'header.html' %}
+    <div class="hidden_box">
+    </div>
+    <div class="main">
+
+
+        <!-- <div class="f row g30 center table">
+            <div id="image_processing" class="img-table-block zoom"><img id="processing" src="/static/img/table_processing.svg"></div>
+            <div class="img-table-block zoom">
+                <img class="" src="/static/img/table_polish.png">
+            </div>
+        </div> -->
+
+        <!-- <input type="text" id="textField" readonly> -->
+        <div class="f row g ac">
+            <hr align="center" width="40%" size="1" color="black">
+            <p>Блоки Обработки</p>
+            <hr align="center" width="40%" size="1" color="black" >
+        </div>
+
+
+        <div class="container">   
+
+            <!-- Мотор 1 -->
+            <div class="card" id="motor1">
+                <h1 class="background-int">1</h1>
+                <form class="motor-form" action="/submit" method="POST">
+                    <input type="hidden" id="speed_motor1" name="speed" value="35">
+                    <input type="hidden" id="direction_motor1" name="direction" value="1">
+                    <input type="hidden" id="start_type_motor1" name="start_type" value="1">
+<!--                    <script>-->
+<!--                        updateSpeed('motor1', $('range_motor1').value);-->
+<!--                    </script>-->
+                    <div class="f row sb">
+                        <input class="range" id="range_motor1" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('motor1', this.value)">
+                        <p class="text_value numeric-box"><span id="speed_value_motor1">35</span></p>
+                    </div>
+                    <div class="f row g">
+                        <button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('motor1', 'direction', '1')">
+                            <img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor1', 'direction', '0')">
+                            <img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor1', 'start_type', '1')">
+                            <img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('motor1', 'start_type', '0')">
+                            <img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">        
+                        </button>
+
+                        <button type="button" id="motor_start_1" class="btn-submit motor-start blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+
+                <form class="numeric-form" id="servo1" action="/submit_numeric" method="POST">
+                    <div class="f row g">
+                        <input type="text" class="number-form numeric-box numeric_input btn-leftcircle" id="numericInput_servo1" name="numericInput1" min="0" max="1000" step="1" value="50">
+                        <button type="button" class="btn-submit set-weight blue btn-nocircle">
+                            <img src="static/icon/weight.svg" alt="weight icon" width="16" height="16">                                  
+                        </button>
+
+                        <button type="button" class="btn-min inactive btn-nocircle loico_pd">
+                            <img src="static/icon/homepos.svg" alt="homepos icon" width="25" height="15">                                 
+                        </button>
+                        <button type="button" class="btn-min inactive loico_pd btn-rightcircle">
+                            <img src="static/icon/safepos.svg" alt="weight icon" width="25" height="15">                
+                        </button>
+
+                        <button type="button" id="servo_start_servo1" class="btn-submit btn-icon start-servo blue btn-fullcircle m-r" data-status="0">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        
+            <!-- Мотор 2 -->
+            <div class="card" id="motor2">
+                <h1 class="background-int">2</h1>
+                <form class="motor-form" action="/submit" method="POST">
+                    <input type="hidden" id="speed_motor2" name="speed" value="35">
+                    <input type="hidden" id="direction_motor2" name="direction" value="1">
+                    <input type="hidden" id="start_type_motor2" name="start_type" value="1">
+                    <div class="f row sb">
+                        <input class="range" id="range_motor2" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('motor2', this.value)">
+                        <p class="text_value numeric-box"><span id="speed_value_motor2">35</span></p>
+                    </div>
+                    <div class="f row g">
+                        <button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('motor2', 'direction', '1')">
+                            <img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor2', 'direction', '0')">
+                            <img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor2', 'start_type', '1')">
+                            <img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('motor2', 'start_type', '0')">
+                            <img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">      
+                        </button>
+                        <button type="button" id="motor_start_2" class="btn-submit motor-start blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>  
+
+                <form class="numeric-form" id="servo2" action="/submit_numeric" method="POST">
+                    <div class="f row g">
+                        <input type="text" class="number-form numeric-box numeric_input btn-leftcircle" id="numericInput_servo2" name="numericInput1" min="0" max="1000" step="1" value="50">
+                        
+                        <button type="button" class="btn-submit set-weight blue btn-nocircle">
+                            <img src="static/icon/weight.svg" alt="weight icon" width="16" height="16">  
+                        </button>
+                        <button type="button" class="btn-min inactive btn-nocircle loico_pd">
+                            <img src="static/icon/homepos.svg" alt="homepos icon" width="25" height="15">                                 
+                        </button>
+                        <button type="button" class="btn-min inactive loico_pd btn-rightcircle">
+                            <img src="static/icon/safepos.svg" alt="weight icon" width="25" height="15">                
+                        </button>
+
+                        <button type="button" id="servo_start_servo2" class="btn-submit btn-icon start-servo blue btn-fullcircle m-r" data-status="0">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Мотор 3 -->
+            <div class="card" id="motor3">
+                <h1 class="background-int">3</h1>
+                <form class="motor-form" action="/submit" method="POST">
+                    <input type="hidden" id="speed_motor3" name="speed" value="35">
+                    <input type="hidden" id="direction_motor3" name="direction" value="1">
+                    <input type="hidden" id="start_type_motor3" name="start_type" value="1">
+                    <div class="f row sb">
+                        <input class="range" id="range_motor3" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('motor3', this.value)">
+                        <p class="text_value numeric-box"><span id="speed_value_motor3">35</span></p>
+                    </div>
+                    <div class="f row g">
+                        <button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('motor3', 'direction', '1')">
+                            <img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor3', 'direction', '0')">
+                            <img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor3', 'start_type', '1')">
+                            <img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('motor3', 'start_type', '0')">
+                            <img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">        
+                        </button>
+
+                        <button type="button" id="motor_start_3" class="btn-submit motor-start blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+
+                <form class="numeric-form" id="servo3" action="/submit_numeric" method="POST">
+                    <div class="f row g">
+                        <input type="text" class="number-form numeric-box numeric_input btn-leftcircle" id="numericInput_servo3" name="numericInput1" min="0" max="1000" step="1" value="50">
+                        
+                        <button type="button" class="btn-submit set-weight blue btn-nocircle">
+                            <img src="static/icon/weight.svg" alt="weight icon" width="16" height="16">                                  
+                        </button>
+
+                        <button type="button" class="btn-min inactive btn-nocircle loico_pd">
+                            <img src="static/icon/homepos.svg" alt="homepos icon" width="25" height="15">                                 
+                        </button>
+                        <button type="button" class="btn-min inactive loico_pd btn-rightcircle">
+                            <img src="static/icon/safepos.svg" alt="weight icon" width="25" height="15">                
+                        </button>
+
+                        <button type="button" id="servo_start_servo3" class="btn-submit btn-icon start-servo blue btn-fullcircle m-r" data-status="0">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Мотор 4 -->
+            <div class="card" id="motor4">
+                <h1 class="background-int">4</h1>
+                <form class="motor-form" action="/submit" method="POST">
+                    <input type="hidden" id="speed_motor4" name="speed" value="35">
+                    <input type="hidden" id="direction_motor4" name="direction" value="1">
+                    <input type="hidden" id="start_type_motor4" name="start_type" value="1">
+                    <div class="f row sb">
+                        <input class="range" id="range_motor4" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('motor4', this.value)">
+                        <p class="text_value numeric-box"><span id="speed_value_motor4">35</span></p>
+                    </div>
+                    <div class="f row g">
+                        <button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('motor4', 'direction', '1')">
+                            <img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor4', 'direction', '0')">
+                            <img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor4', 'start_type', '1')">
+                            <img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('motor4', 'start_type', '0')">
+                            <img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">        
+                        </button>
+
+                        <button type="button" id="motor_start_4" class="btn-submit motor-start blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+
+                <form class="numeric-form" id="servo4" action="/submit_numeric" method="POST">
+                    <div class="f row g">
+                        <input type="text" class="number-form numeric-box numeric_input btn-leftcircle" id="numericInput_servo4" name="numericInput1" min="0" max="1000" step="1" value="50">
+                        
+                        <button type="button" class="btn-submit set-weight blue btn-nocircle">
+                            <img src="static/icon/weight.svg" alt="weight icon" width="16" height="16">                                  
+                        </button>
+
+                        <button type="button" class="btn-min inactive btn-nocircle loico_pd">
+                            <img src="static/icon/homepos.svg" alt="homepos icon" width="25" height="15">                                 
+                        </button>
+                        <button type="button" class="btn-min inactive loico_pd btn-rightcircle">
+                            <img src="static/icon/safepos.svg" alt="weight icon" width="25" height="15">                
+                        </button>
+
+                        <button type="button" id="servo_start_servo4" class="btn-submit btn-icon start-servo blue btn-fullcircle m-r" data-status="0">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Мотор 5 -->
+            <div class="card" id="motor5">
+                <h1 class="background-int">5</h1>
+                <form class="motor-form" action="/submit" method="POST">
+                    <input type="hidden" id="speed_motor5" name="speed" value="35">
+                    <input type="hidden" id="direction_motor5" name="direction" value="1">
+                    <input type="hidden" id="start_type_motor5" name="start_type" value="1">
+                    <div class="f row sb">
+                        <input class="range" id="range_motor5" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('motor5', this.value)">
+                        <p class="text_value numeric-box"><span id="speed_value_motor5">35</span></p>
+                    </div>
+                    <div class="f row g">
+                        <button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('motor5', 'direction', '1')">
+                            <img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor5', 'direction', '0')">
+                            <img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor5', 'start_type', '1')">
+                            <img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('motor5', 'start_type', '0')">
+                            <img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">        
+                        </button>
+
+                        <button type="button" id="motor_start_5" class="btn-submit motor-start blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+
+                <form class="numeric-form" id="servo5" action="/submit_numeric" method="POST">
+                    <div class="f row g">
+                        <input type="text" class="number-form numeric-box numeric_input btn-leftcircle" id="numericInput_servo5" name="numericInput1" min="0" max="1000" step="1" value="50">
+                        
+                        <button type="button" class="btn-submit set-weight blue btn-nocircle">
+                            <img src="static/icon/weight.svg" alt="weight icon" width="16" height="16">                                  
+                        </button>
+
+                        <button type="button" class="btn-min inactive btn-nocircle loico_pd">
+                            <img src="static/icon/homepos.svg" alt="homepos icon" width="25" height="15">                                 
+                        </button>
+                        <button type="button" class="btn-min inactive loico_pd btn-rightcircle">
+                            <img src="static/icon/safepos.svg" alt="weight icon" width="25" height="15">                
+                        </button>
+
+                        <button type="button" id="servo_start_servo5" class="btn-submit btn-icon start-servo blue btn-fullcircle m-r" data-status="0">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Мотор 6 -->
+            <div class="card" id="motor6">
+                <h1 class="background-int">6</h1>
+                <form class="motor-form" action="/submit" method="POST">
+                    <input type="hidden" id="speed_motor6" name="speed" value="35">
+                    <input type="hidden" id="direction_motor6" name="direction" value="1">
+                    <input type="hidden" id="start_type_motor6" name="start_type" value="1">
+                    <div class="f row sb">
+                        <input class="range" id="range_motor6" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('motor6', this.value)">
+                        <p class="text_value numeric-box"><span id="speed_value_motor6">35</span></p>
+                    </div>
+                    <div class="f row g">
+                        <button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('motor6', 'direction', '1')">
+                            <img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor6', 'direction', '0')">
+                            <img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('motor6', 'start_type', '1')">
+                            <img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('motor6', 'start_type', '0')">
+                            <img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">        
+                        </button>
+
+                        <button type="button" id="motor_start_6" class="btn-submit motor-start blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+
+                <form class="numeric-form" id="servo6" action="/submit_numeric" method="POST">
+                    <div class="f row g">
+                        <input type="text" class="number-form numeric-box numeric_input btn-leftcircle" id="numericInput_servo6" name="numericInput1" min="0" max="1000" step="1" value="50">
+                        
+                        <button type="button" class="btn-submit set-weight blue btn-nocircle">
+                            <img src="static/icon/weight.svg" alt="weight icon" width="16" height="16">                                  
+                        </button>
+
+                        <button type="button" class="btn-min inactive btn-nocircle loico_pd">
+                            <img src="static/icon/homepos.svg" alt="homepos icon" width="25" height="15">                                 
+                        </button>
+                        <button type="button" class="btn-min inactive loico_pd btn-rightcircle">
+                            <img src="static/icon/safepos.svg" alt="weight icon" width="25" height="15">                
+                        </button>
+
+                        <button type="button" id="servo_start_servo6" class="btn-submit btn-icon start-servo blue btn-fullcircle m-r" data-status="0">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="f row g ac mt">
+            <hr align="center" width="40%" size="1" color="black">
+            <p>Блок поворота</p>
+            <hr align="center" width="40%" size="1" color="black" >
+        </div>
+        
+        <div class="container">
+            <!-- Рука 1 -->
+            <div class="card" id="hand1">
+                <h1 class="background-int">H</h1>
+                <form class="numeric-form" id="hand_form_1">
+                    <div class="f row sb">
+                        <label>Угол (0-270):</label>
+                        <input type="number" class="number-form numeric-box numeric_input" id="speed_hand1" min="0" max="270" step="5" value="0">
+                    </div>
+                    <div class="f row g mt">
+                        <button type="button" class="btn-min blue btn-leftcircle" id="isopen_hand1" data-status="0">
+                            <span>Закрыт</span>
+                        </button>
+
+                        <button type="button" id="hand_start_1" class="btn-submit btn-icon start-hand blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="f row g ac mt">
+            <hr align="center" width="40%" size="1" color="black">
+            <p>Блок полировки</p>
+            <hr align="center" width="40%" size="1" color="black" >
+        </div>
+        <div class="container">   
+
+            <!-- полировка 1 -->
+            <div class="card" id="polish1">
+                <form class="motor-form" action="/submit" method="POST">
+                    <input type="hidden" id="speed_polish1" name="speed" value="35">
+                    <input type="hidden" id="direction_polish1" name="direction" value="1">
+                    <input type="hidden" id="start_type_polish1" name="start_type" value="1">
+                    <script>
+                        updateSpeed('polish1', $('range_polish1').value);
+                    </script>
+                    <div class="f row sb">
+                        <input class="range" id="range_polish1" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('polish1', this.value)">
+                        <p class="text_value numeric-box"><span id="speed_value_polish1">35</span></p>
+                    </div>
+                    <div class="f row g">
+                        <button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('polish1', 'direction', '1')">
+                            <img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('polish1', 'direction', '0')">
+                            <img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue" onclick="toggleButton('polish1', 'start_type', '1')">
+                            <img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+                        </button>
+                        <button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('polish1', 'start_type', '0')">
+                            <img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">        
+                        </button>
+
+                        <button type="button" id="polish_start_1" class="btn-submit motor-start blue btn-fullcircle m-r">
+                            <img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+                            <img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- полировка 2 -->
+            <!-- полировка 2 -->
+			<div class="card" id="polish2">
+				<form class="motor-form" action="/submit" method="POST">
+					<input type="hidden" id="speed_polish2" name="speed" value="35">
+					<input type="hidden" id="direction_polish2" name="direction" value="1">
+					<input type="hidden" id="start_type_polish2" name="start_type" value="1">
+					<script>
+						updateSpeed('polish2', $('#range_polish2').val());
+					</script>
+					<div class="f row sb">
+						<input class="range" id="range_polish2" type="range" min="0" max="100" step="1" value="35" oninput="updateSpeed('polish2', this.value)">
+						<p class="text_value numeric-box"><span id="speed_value_polish2">35</span></p>
+					</div>
+					<div class="f row g">
+						<button type="button" class="btn-min blue btn-leftcircle" onclick="toggleButton('polish2', 'direction', '1')">
+							<img src="static/icon/fw.svg" alt="forward icon" width="15" height="15">
+						</button>
+						<button type="button" class="btn-min blue" onclick="toggleButton('polish2', 'direction', '0')">
+							<img class="rev" src="static/icon/fw.svg" alt="backward icon" width="15" height="15">
+						</button>
+						<button type="button" class="btn-min blue" onclick="toggleButton('polish2', 'start_type', '1')">
+							<img src="static/icon/soft.svg" alt="hard icon" width="15" height="15">
+						</button>
+						<button type="button" class="btn-min blue btn-rightcircle" onclick="toggleButton('polish2', 'start_type', '0')">
+							<img src="static/icon/hard.svg" alt="hard icon" width="15" height="15">        
+						</button>
+
+						<button type="button" id="polish_start_2" class="btn-submit motor-start blue btn-fullcircle m-r">
+							<img class="icon-start" src="static/icon/play.svg" alt="play Icon" width="15" height="15">
+							<img class="icon-stop" src="static/icon/stop.svg" alt="stop Icon" width="15" height="15">
+						</button>
+					</div>
+				</form>
+			</div>
+
+
+
+
+        <div class="container">  
+            <!-- <div class="f row">
+                <button type="button" class="btn-submit btn-icon" data-state="0"><span class="icon_servise"></span>Сервисный режим</button>
+            </div> -->
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/terminal.js') }}"></script>
+    <script src="/static/js/motor_logic.js"></script>
+</body>
+
+</html>

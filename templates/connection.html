@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSH Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.0.0/css/xterm.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.0.0/lib/xterm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+</head>
+<body>
+<header>
+    <h1>АКИМОВ</h1>
+</header>
+<nav>
+    <a href="/">ГЛАВНАЯ</a>
+    <a href="/table">СТОЛ</a>
+    <a href="#камера">КАМЕРА</a>
+    <a href="#робот">РОБОТ</a>
+    <a href="/connection">ПОДКЛЮЧЕНИЕ И СЕТЬ</a>
+    <a href="#">НАСТРОЙКИ</a>
+</nav>
+<div class="main">
+    <h3>Настройка локальной машины</h3>
+     <div class="input">
+        <input type="text" id="local" name="host" value="{{ local_ip }}">
+     </div>
+    {% for port, color in port_status.items() %}
+        <div class="port-block" style="background-color: {{ color }};">
+            {{ port }}
+        </div>
+    {% endfor %}
+
+    <div class="input">
+        <input type="text" id="host" name="host" value="0.0.0.0">
+
+        <input type="number" id="port" name="port" value="22">
+
+        <input type="text" id="username" name="username" value="username">
+
+        <input type="password" id="password" name="password" value="******">
+
+        <button id="connectButton">Connect</button>
+    </div>
+
+</div>
+</body>
+</html>

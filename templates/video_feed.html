@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Stream</title>
+</head>
+
+{% include 'header.html' %}
+
+<body>
+    <div class="main">
+        <div class="f row g ac">
+            <hr align="center" width="40%" size="1" color="black">
+            <p>Трансляция с Кобота</p>
+            <hr align="center" width="40%" size="1" color="black" >
+        </div>
+        <img id="videoFrame" src="{{ CAMERA_URL }}" alt="Video Stream">
+    
+
+
+
+        <div class="camera-container">
+	
+		
+            <div class="f row g camera-box">
+                <!--<img class="camera-icon icon-base" src="static/icon/camera/brightness.svg" alt="forward icon" width="32" height="32">-->
+                <input class="number-form numeric-box numeric-input-camera btn-leftcircle btn-camera" type="number" id="brightness" placeholder="0" min="-1" max="1" step="0.1">
+                <button class="btn-min blue loico_pd btn-rightcircle" onclick="SendCommandToCamera('brightness')">
+                    <img src="static/icon/send.svg" alt="forward icon" width="20" height="20">
+                </button>
+            </div>
+            <div class="f row g camera-box">
+                <img class="camera-icon icon-base" src="static/icon/camera/contrast.svg" alt="forward icon" width="32" height="32">
+                <input class="number-form numeric-box numeric-input-camera btn-leftcircle btn-camera" type="number" id="contrast" placeholder="0" min="0" max="5" step="0.1">
+                <button class="btn-min blue loico_pd btn-rightcircle" onclick="SendCommandToCamera('contrast')">
+                    <img src="static/icon/send.svg" alt="forward icon" width="20" height="20">
+                </button>
+            </div>
+            <div class="f row g camera-box">
+                <img class="camera-icon icon-base" src="static/icon/camera/sharp.svg" alt="forward icon" width="32" height="32">
+                <input class="number-form numeric-box numeric-input-camera btn-leftcircle btn-camera" type="number" id="sharpness" placeholder="0" min="0" max="16" step="0.5">
+                <button class="btn-min blue loico_pd btn-rightcircle" onclick="SendCommandToCamera('sharpness')">
+                    <img src="static/icon/send.svg" alt="forward icon" width="20" height="20">
+                </button>
+            </div>
+            <!--<div class="f row g camera-box camera-long-box">
+                <img class="camera-icon icon-base" src="static/icon/camera/red_blue.svg" alt="forward icon" width="32" height="32">
+                <input class="number-form numeric-box numeric-input-camera btn-leftcircle btn-camera" type="number" id="redblue" placeholder="1" min="0" max="4" step="0.1">
+                <input class="number-form numeric-box numeric-input-camera btn-nocircle camera-small-margin" type="number" id="redblue_2" placeholder="1" min="0" max="4" step="0.1">
+                <button class="btn-min blue loico_pd btn-rightcircle" onclick="SendCommandToCamera('redblue')">
+                    <img src="static/icon/send.svg" alt="forward icon" width="20" height="20">
+                </button>
+            </div>-->
+			<div class="f row g camera-box">
+                <img class="camera-icon icon-base" src="static/icon/camera/brightness.svg" alt="forward icon" width="32" height="32">
+                <input class="number-form numeric-box numeric-input-camera btn-leftcircle btn-camera" type="number" id="mf" placeholder="0" min="1" max="22" step="1">
+                <button class="btn-min blue loico_pd btn-rightcircle" onclick="SendCommandToCamera('mf')">
+                    <img src="static/icon/send.svg" alt="forward icon" width="20" height="20">
+                </button>
+            </div>
+            <div class="f row g camera-box">
+                <!-- ><img class="camera-icon" src="static/icon/camera/sharp.svg" alt="forward icon" width="32" height="32">
+                <input class="number-form numeric-box numeric-input-camera btn-leftcircle" type="number" id="contrast" placeholder="0" min="0" max="16" step="0.5"> -->
+                <button class="btn-min blue loico_pd btn-fullcircle" onclick="SendCommandToCamera('contour')">
+                    <img src="static/icon/camera/vector.svg" alt="forward icon" width="20" height="20">
+                </button>
+            </div>
+        </div>
+
+    
+
+    </div>
+
+    <script>
+    // Переменная для хранения состояния контура (переключатель)
+    let contourState = false;
+
+    function SendCommandToCamera(mode_type) {
+        console.log(mode_type);
+        var camera_Value;
+        var camera_Command;
+
+        if (mode_type == "brightness") {
+            camera_Value = document.getElementById('brightness').value;
+            camera_Command = "set_brightness";
+        } else if (mode_type == "contrast") {
+            camera_Value = document.getElementById('contrast').value;
+            camera_Command = "set_contrast";
+	    } else if (mode_type == "mf") {
+            camera_Value = document.getElementById('mf').value;
+            camera_Command = "set_mf";
+        } else if (mode_type == "sharpness") {
+            camera_Value = document.getElementById('sharpness').value;
+            camera_Command = "set_sharpness";
+        } else if (mode_type == "contour") {
+            // Переключаем состояние при каждом нажатии
+            contourState = !contourState;
+            camera_Value = contourState;
+            camera_Command = "set_contour";
+        } else if (mode_type == "redblue") {
+            camera_Value = [document.getElementById('redblue').value, document.getElementById('redblue_2').value];
+            camera_Command = "set_colourgains";
+        }
+
+        console.log(camera_Command, camera_Value);
+
+        fetch('http://192.168.15.50:8000/api/command', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                command: camera_Command,
+                value: camera_Value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Success: " + JSON.stringify(data));
+        })
+        .catch(error => {
+            console.log("Error: " + error);
+        });
+    }
+    </script>
+</body>
+</html>

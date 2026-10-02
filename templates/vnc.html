@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VNC Remote Desktop</title>
+    <style>
+        /* Ваши стили остаются без изменений */
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        html {
+            height: 100%;
+        }
+        #top_bar {
+            background-color: #6e84a3;
+            color: white;
+            font: bold 12px Helvetica;
+            padding: 6px 5px 4px 5px;
+            border-bottom: 1px outset;
+            margin-bottom: 15px;
+        }
+        #status {
+            text-align: center;
+        }
+        #sendCtrlAltDelButton {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            border: 1px outset;
+            padding: 5px 5px 4px 5px;
+            cursor: pointer;
+            background: #5a6d8a;
+            color: white;
+        }
+        #screen {
+            flex: 1;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>VNC Remote Desktop</h2>
+        
+        <div id="top_bar">
+            <div id="status">Loading</div>
+            <div id="sendCtrlAltDelButton">Ctrl+Alt+Del</div>
+        </div>
+        
+        <div id="screen">
+            <!-- Remote screen will appear here -->
+        </div>
+    </div>
+
+    <script type="module">
+        import RFB from '/static/novnc/core/rfb.js';
+
+        let rfb;
+        let desktopName;
+
+        function status(text) {
+            document.getElementById('status').textContent = text;
+            console.log('Status:', text);
+        }
+
+        function connectedToServer(e) {
+            status("✓ Connected to " + desktopName);
+            document.getElementById('status').style.color = "green";
+            console.log('Connected successfully');
+        }
+
+        function disconnectedFromServer(e) {
+            console.log('Disconnected:', e.detail);
+            if (e.detail.clean) {
+                status("Disconnected");
+            } else {
+                status("✗ Error: " + (e.detail.reason || 'Unknown error'));
+            }
+            document.getElementById('status').style.color = "red";
+        }
+
+        function credentialsAreRequired(e) {
+            console.log('Credentials required');
+            status("Password required");
+            const password = prompt("Enter VNC password (default: 0000):", "0000");
+            if (password) {
+                rfb.sendCredentials({ password: password });
+                status("Authenticating...");
+            } else {
+                status("Password required");
+            }
+        }
+
+        function updateDesktopName(e) {
+            desktopName = e.detail.name;
+            console.log('Desktop name:', desktopName);
+        }
+
+        function sendCtrlAltDel() {
+            if (rfb) {
+                rfb.sendCtrlAltDel();
+            }
+            return false;
+        }
+
+        document.getElementById('sendCtrlAltDelButton').onclick = sendCtrlAltDel;
+
+        // Получаем текущий хост и порт
+        const host = window.location.hostname;
+        const port = "6080";
+        
+        // Определяем протокол WebSocket
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const url = `${wsProtocol}://${host}:${port}/`;
+        
+        console.log('Connecting to:', url);
+        status("Connecting to VNC server...");
+
+        // Инициализируем RFB с минимальными настройками
+        try {
+            rfb = new RFB(document.getElementById('screen'), url, {
+                shared: true,
+                // Не передаем пароль заранее - пусть сервер запросит
+                credentials: null,
+                // Отключаем VeNCrypt явно
+                encrypt: false
+            });
+
+            // Настраиваем обработчики событий
+            rfb.addEventListener("connect", connectedToServer);
+            rfb.addEventListener("disconnect", disconnectedFromServer);
+            rfb.addEventListener("credentialsrequired", credentialsAreRequired);
+            rfb.addEventListener("desktopname", updateDesktopName);
+
+            // Масштабирование
+            rfb.scaleViewport = true;
+            rfb.resizeSession = true;
+            
+            // Добавляем обработку ошибок безопасности
+            rfb.addEventListener("securityfailure", function(e) {
+                console.error('Security failure:', e.detail);
+                status("✗ Authentication failed");
+            });
+
+            console.log('RFB client initialized');
+            
+        } catch (error) {
+            console.error('Failed to initialize RFB:', error);
+            status("✗ Failed to initialize VNC client");
+        }
+    </script>
+</body>
+</html>
